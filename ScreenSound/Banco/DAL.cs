@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ScreenSound.Banco
 {
-    internal abstract class DAL<T> where T : class //Classe conceito de Generics
+    internal class DAL<T> where T : class //Classe conceito de Generics
     {
         protected readonly ScreenSoundContext context;
 
@@ -37,6 +37,11 @@ namespace ScreenSound.Banco
         {
             context.Set<T>().Update(objeto);
             context.SaveChanges();
+        }
+
+        public T? RecuperarPor(Func<T, bool> condicao) 
+        {
+            return context.Set<T>().FirstOrDefault(condicao);
         }
     }
 }
